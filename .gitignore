@@ -1,0 +1,30 @@
+.DS_Store
+.thumbs.db
+
+# Node.js
+node_modules
+dist
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Dependency directories
+pids
+logs
+*.pid
+*.seed
+*.pid.lock
+
+# Optional - Configuration files that may contain sensitive information
+
+/venv
+
+
+/venv
