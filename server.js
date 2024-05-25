@@ -105,8 +105,8 @@ async function run() {
           const allowedOrigins = [
             "http://localhost:3000",
             "http://localhost:9000",
-            "http://youtubeanalysistech.com",
-            "http://www.youtubeanalysistech.com",
+            "http://sentimentanalysistech.com",
+            
           ];
           // Check if the origin is in your list of allowed origins or a Chrome extension
           if (
