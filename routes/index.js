@@ -201,7 +201,7 @@ router.get('/analyze/:videoId', async (req, res) => {
     try {
         // Fetch comments from Elasticsearch using videoId
         const esResponse = await req.elasticClient.get({
-            index: process.env.ELASTICSEARCH_MAIN_INDEX, // Ensure this is set correctly in your .env file
+            index: MAIN_INDEX, // Ensure this is set correctly in your .env file
             id: videoId
         });
 
@@ -299,7 +299,7 @@ router.get('/analyze/keyword/:keyword', async (req, res) => {
     try {
         // Search for comments containing the keyword across all videos
         const esResponse = await req.elasticClient.search({
-            index: process.env.ELASTICSEARCH_MAIN_INDEX,
+            index: MAIN_INDEX,
             size: 1000, // Adjust size if needed
             body: {
                 query: {
