@@ -106,6 +106,7 @@ async function run() {
             "http://localhost:3000",
             "http://localhost:9000",
             "http://sentimentanalysistech.com",
+            "https://sentimentanalysistech.com",
             
           ];
           // Check if the origin is in your list of allowed origins or a Chrome extension
