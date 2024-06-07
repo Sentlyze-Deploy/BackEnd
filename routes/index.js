@@ -5,15 +5,77 @@ const { spawn } = require('child_process');
 const { google } = require('googleapis');
 const axios = require('axios'); // Make sure to import axios
 
+
+const openai_key = "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";
+
+
 const YOUTUBE_API_KEY = "AIzaSyD-MPVRjHp0qVcgShSyyrD5oRzv_npoOeM";
 const youtube = google.youtube({
     version: 'v3',
     auth: YOUTUBE_API_KEY
 });
 
+
 const MAIN_INDEX = 'analysistech'; // Define the main index
 
 const flaskUrl = 'https://flasksentlyze.azurewebsites.net/predict';
+
+
+
+
+router.post('/evaluate', async (req, res) => {
+    try {
+        const { prediction, mostFrequentWords } = req.body;
+
+        // En çok kullanılan kelimeleri ve analiz sonuçlarını GPT-4'e göndererek değerlendirme yapalım
+        const evaluation = await evaluateResults(prediction, mostFrequentWords);
+
+        res.json({
+            evaluation
+        });
+    } catch (error) {
+        console.error('Error evaluating results:', error);
+        res.status(500).json({ error: 'Error evaluating results' });
+    }
+});
+
+async function evaluateResults(prediction, mostFrequentWords) {
+    const prompt = `
+    You are an AI assistant tasked with evaluating the following data:
+
+    Prediction: ${prediction}
+    Most Frequent Words: ${mostFrequentWords.join(', ')}
+
+ This is a result of the sentiment analysis of a youtube video , please  provide a detailed report should summarize the overall sentiment and prediction, should highlight any notable comments or trends based on the most frequent words, paragraph should provide suggestions for improvements or further analysis to client not for us.  This response will display to directly client. 
+ `;
+
+    try {
+        const response = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    { role: 'system', content: 'You are a helpful assistant.' },
+                    { role: 'user', content: prompt }
+                ],
+                max_tokens: 500,
+                temperature: 0.7
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${openai_key}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        return response.data.choices[0].message.content.trim();
+    } catch (error) {
+        console.error('Error making request to OpenAI:', error.response ? error.response.data : error.message);
+        throw new Error('Failed to fetch response from OpenAI');
+    }
+}
+
 
 router.get('/videos', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
