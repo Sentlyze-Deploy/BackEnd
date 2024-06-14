@@ -46,7 +46,7 @@ async function evaluateResults(prediction, mostFrequentWords) {
     Prediction: ${prediction}
     Most Frequent Words: ${mostFrequentWords.join(', ')}
 
- This is a result of the sentiment analysis of a youtube video , please  provide a detailed report should summarize the overall sentiment and prediction, should highlight any notable comments or trends based on the most frequent words, paragraph should provide suggestions for improvements or further analysis to client not for us.  This response will display to directly client. 
+ Bütün yorumları incele analiz et ve 3 paragraf yazı yaz. Birinci paragraf yorumlardan elde ettiğin analize göre kullanıcılar ne düşünüyor, ne istiyor? bunlarla ilgili olsun. İkinci paragrafta yorumlara göre video nasıl geliştirilebilir bundan bahset. Üçüncü paragraf ise maddeler halinde genel bir yorum yap. 
  `;
 
     try {
